@@ -1,0 +1,647 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Im a Teapot",
+    "description": "This is very important",
+    "contact": {
+      "name": "cobra GmbH",
+      "url": "https://www.cobra.de",
+      "email": "info@cobra.de"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/Touchpoints/{id}": {
+      "get": {
+        "tags": [
+          "Touchpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "style": "simple",
+            "example": "de"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TouchpointDtoCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TouchpointDtoCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TouchpointDtoCobraApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Touchpoints/{id}/Quicklook": {
+      "get": {
+        "tags": [
+          "Touchpoints"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "style": "simple",
+            "example": "de"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TouchpointQuicklookDtoCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TouchpointQuicklookDtoCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TouchpointQuicklookDtoCobraApiResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectCobraApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AbstractChannelDto": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "touchType": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "channel": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObjectCobraApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaData": {
+            "$ref": "#/components/schemas/ResponseMetaData"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObjectLinkDto": {
+        "type": "object",
+        "properties": {
+          "relationId": {
+            "type": "string",
+            "nullable": true
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrgaTagForDetailedDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdByUserId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "modifiedByUserId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PeopleInvolvedDto": {
+        "type": "object",
+        "properties": {
+          "peopleId": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstname": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastname": {
+            "type": "string",
+            "nullable": true
+          },
+          "iconUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "highlighted": {
+            "type": "boolean"
+          },
+          "participantRole": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseMetaData": {
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "responseTimeStamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TouchpointDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateModified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdByUserId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "modifiedByUserId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "topic": {
+            "type": "string",
+            "nullable": true
+          },
+          "details": {
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "objectLinks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLinkDto"
+            },
+            "nullable": true
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TouchpointFileDto"
+            },
+            "nullable": true
+          },
+          "touchDate": {
+            "type": "DateOnly",
+            "nullable": true,
+            "example": "\"2023-05-17\""
+          },
+          "touchTime": {
+            "type": "TimeOnly",
+            "nullable": true,
+            "example": "\"PT07H47M31S\""
+          },
+          "currentMood": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "peopleInvolved": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeopleInvolvedDto"
+            },
+            "nullable": true
+          },
+          "channel": {
+            "$ref": "#/components/schemas/AbstractChannelDto"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isOutgoing": {
+            "type": "boolean"
+          },
+          "orgaTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgaTagForDetailedDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TouchpointDtoCobraApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TouchpointDto"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaData": {
+            "$ref": "#/components/schemas/ResponseMetaData"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TouchpointFileDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileType": {
+            "$ref": "#/components/schemas/TouchpointFileType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TouchpointFileType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TouchpointQuicklookDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "topic": {
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TouchpointFileDto"
+            },
+            "nullable": true
+          },
+          "objectLinks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ObjectLinkDto"
+            },
+            "nullable": true
+          },
+          "touchDate": {
+            "type": "DateOnly",
+            "nullable": true,
+            "example": "\"2023-05-17\""
+          },
+          "touchTime": {
+            "type": "TimeOnly",
+            "nullable": true,
+            "example": "\"PT07H47M31S\""
+          },
+          "currentMood": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "peopleInvolved": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeopleInvolvedDto"
+            },
+            "nullable": true
+          },
+          "channel": {
+            "$ref": "#/components/schemas/AbstractChannelDto"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isOutgoing": {
+            "type": "boolean"
+          },
+          "orgaTags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrgaTagForDetailedDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TouchpointQuicklookDtoCobraApiResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TouchpointQuicklookDto"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaData": {
+            "$ref": "#/components/schemas/ResponseMetaData"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
