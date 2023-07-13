@@ -34,3 +34,9 @@ jobs:
       
     - name: Publish
       run: dotnet publish 'src/WebApp.Api' -c Release --output ./Release
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: publishtest
+        path: ./Release
