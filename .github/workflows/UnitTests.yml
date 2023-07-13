@@ -16,13 +16,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+        
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore 'src/.'
+      
     - name: Build
       run: dotnet build --no-restore
+      working-directory: 'src/.'
+      
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test 'src/WebApp.UnitTests' --filter UnitTest /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
