@@ -52,6 +52,25 @@ jobs:
         path: ./Release
         retention-days: 1
   
+  
+  createApiDoku:
+    name: Create Api-Doku
+    runs-on: ubuntu-latest
+    needs: [publishArtifact]
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Load Artifact
+    - uses: actions/download-artifact@v3
+      with:
+        name: publishApi
+        path: ./Release
+        
+    - name: Generate swagger.json
+      run: | 
+        dotnet new tool-manifest
+        dotnet tool install --version 5.3.1 Swashbuckle.AspNetCore.Cli
+        dotnet swagger tofile --output ApiDoku/test.json ./Release/WebApp.Api.dll
     
   deployArtifact:
     name: Deploy API
