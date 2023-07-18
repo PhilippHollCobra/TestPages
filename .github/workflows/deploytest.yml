@@ -31,9 +31,11 @@ jobs:
   UploadArtifact:
     name: Publich and Build Artifact
     runs-on: ubuntu-latest
+    needs: build
     steps:
     - name: Publish
       run: dotnet publish 'src/WebApp.Api' -c Release --output ./Release
+      working-directory: 'src/.'
       
     - name: Upload artifact
       uses: actions/upload-artifact@v3
