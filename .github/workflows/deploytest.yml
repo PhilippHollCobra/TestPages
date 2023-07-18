@@ -60,11 +60,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Load Artifact
-    - uses: actions/download-artifact@v3
+    - name: LoadArtifact
+      uses: actions/download-artifact@v3
       with:
         name: publishApi
         path: ./Release
+            
+    - name: Generate swagger.json
+      run: | 
+        dotnet new tool-manifest
+        dotnet tool install --version 5.3.1 Swashbuckle.AspNetCore.Cli
+        dotnet swagger tofile --output ApiDoku/test.json ./Release/WebApp.Api.dll    
     
   deployArtifact:
     name: Deploy API
