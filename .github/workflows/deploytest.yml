@@ -25,24 +25,25 @@ jobs:
       run: dotnet build --no-restore
       working-directory: 'src/.'
       
-  tests:
+      
+  unittests:
     name: UnitTests
     runs-on: ubuntu-latest
     needs: build
     steps:
     - uses: actions/checkout@v3
-        
     - name: Run Tests
       run: dotnet test 'src/WebApp.UnitTests' --filter UnitTest /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
       
-  UploadArtifact:
-    name: Publich and Build Artifact
+      
+  publishArtifact:
+    name: Publish artifact
     runs-on: ubuntu-latest
-    needs: [build, tests]
+    needs: [unittests]
     steps:
+    - uses: actions/checkout@v3
     - name: Publish
       run: dotnet publish 'src/WebApp.Api' -c Release --output ./Release
-      working-directory: 'src/.'
       
     - name: Upload artifact
       uses: actions/upload-artifact@v3
@@ -51,3 +52,16 @@ jobs:
         path: ./Release
   
     
+  deployArtifact:
+    name: Deploy artifact
+    runs-on: ubuntu-latest
+    needs: [publishArtifact]
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: publishtest
+        path: ./Release
+    
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./Release
