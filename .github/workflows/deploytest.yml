@@ -78,7 +78,8 @@ jobs:
       run: | 
         dotnet new tool-manifest
         dotnet tool install --version 6.5.0 Swashbuckle.AspNetCore.Cli
-        dotnet swagger tofile --output ./ApiDoku/test.json ./Release/WebApp.Api.dll v1
+        dotnet swagger tofile --output swagger.json ./Release/WebApp.Api.dll v1
+        cp -a swagger.json ./ApiDoku/swagger.json
       
   
   deployApiDoku:
