@@ -31,7 +31,9 @@ jobs:
     needs: build
     steps:
     - name: Run Tests
-      run: dotnet test 'src/WebApp.UnitTests' --filter UnitTest /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
+      run: | 
+            dotnet build --no-restore 'src/.'
+            dotnet test 'src/WebApp.UnitTests' --filter UnitTest /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
       
   UploadArtifact:
     name: Publich and Build Artifact
