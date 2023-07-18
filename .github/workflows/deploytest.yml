@@ -79,8 +79,14 @@ jobs:
         dotnet new tool-manifest
         dotnet tool install --version 6.5.0 Swashbuckle.AspNetCore.Cli
         dotnet swagger tofile --output swagger.json ./Release/WebApp.Api.dll v1
-        cp -a swagger.json ./ApiDoku/swagger.json
-      
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: swaggerDoku
+        path: ./swagger.json
+        retention-days: 1
+        
   
   deployApiDoku:
     name: Deploy Api-Doku
