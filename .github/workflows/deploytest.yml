@@ -80,6 +80,14 @@ jobs:
         dotnet tool install --version 5.3.1 Swashbuckle.AspNetCore.Cli
         dotnet swagger tofile --output ApiDoku/test.json ./Release/WebApp.Api.dll    
     
+  deployApiDoku:
+    name: Deploy Api-Doku
+    runs-on: ubuntu-latest
+    needs: [createApiDoku]
+    steps:
+    - uses: actions/checkout@v3
+  
+  
   deployArtifact:
     name: Deploy API
     runs-on: ubuntu-latest
