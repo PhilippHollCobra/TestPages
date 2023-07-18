@@ -48,8 +48,9 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
-        name: publishtest
+        name: publishApi
         path: ./Release
+        retention-days: 1
   
     
   deployArtifact:
@@ -59,7 +60,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@v3
       with:
-        name: publishtest
+        name: publishApi
         path: ./Release
     
     - name: Display files
