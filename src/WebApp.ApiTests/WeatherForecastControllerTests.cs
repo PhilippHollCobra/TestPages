@@ -29,6 +29,25 @@ namespace WebApp.ApiTests
       Assert.True(items.Any());
 
     }
+
+
+    [Fact]
+    public async void GetTest1Async()
+    {
+      //Arrange
+
+      //Act
+      HttpResponseMessage responseMessage = await _httpClient.GetAsync("weatherforecast");
+      string httpContent = await responseMessage.Content.ReadAsStringAsync();
+      IEnumerable<WeatherForecast>? items = JsonSerializer.Deserialize<IEnumerable<WeatherForecast>>(httpContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+      //Assert
+      Assert.True(responseMessage.StatusCode == HttpStatusCode.OK);
+      Assert.NotNull(items);
+      Assert.True(items.Any());
+
+    }
+
   }
 
   public class WeatherForecast
