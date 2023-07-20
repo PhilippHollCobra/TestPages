@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+
+  webapp.api:
+    image: testapi:webappapi
+    build:
+      context: .
+      dockerfile: WebApp.Api/Dockerfile
+    ports:
+      - 9001:9001
