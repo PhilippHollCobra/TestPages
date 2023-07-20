@@ -19,10 +19,10 @@ jobs:
         dotnet-version: 6.0.x
         
     - name: Restore dependencies
-      run: dotnet restore 'src/.'
+      run: dotnet restore 'src/WebApp.sln'
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build WebApp.sln--no-restore
       working-directory: 'src/.'
       
       
