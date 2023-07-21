@@ -68,7 +68,7 @@ jobs:
       working-directory: 'src/.'
       
     - name: Run tests
-      run: ($env:variable1="http://localhost:9001") | dotnet test 'src/WebApp.ApiTests' /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
+      run: ($env:API_BASE_URL="http://localhost:9001") | dotnet test 'src/WebApp.ApiTests' /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
       
       
   publishArtifact:
