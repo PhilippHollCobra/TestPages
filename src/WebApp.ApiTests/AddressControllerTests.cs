@@ -13,7 +13,7 @@ namespace WebApp.ApiTests
 {
   public class AddressControllerTests
   {
-    private readonly HttpClient _httpClient = new () { BaseAddress = new Uri("http://localhost:9001") };
+    private readonly HttpClient _httpClient = new () { BaseAddress = new Uri(EnvironmentSettings.ApiBaseUrl) };
 
     [Fact]
     public async void GetTestAsync()

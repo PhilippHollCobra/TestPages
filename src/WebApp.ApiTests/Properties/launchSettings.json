@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WebApp.ApiTests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "variable1": "Hallo"
+      }
+    }
+  }
+}
