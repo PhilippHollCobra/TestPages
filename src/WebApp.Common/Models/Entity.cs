@@ -15,7 +15,7 @@ namespace WebApp.Common.Models
     [Column("CREATED_BY")]
     public string? CreatedBy { get; set; }
 
-    public Entity() 
+    public Entity()
     {
       DateCreate = DateTime.UtcNow;
       CreatedBy = "Api";

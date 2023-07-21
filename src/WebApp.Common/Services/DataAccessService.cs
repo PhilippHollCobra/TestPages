@@ -11,7 +11,7 @@ namespace WebApp.Common.Services
     private readonly ILogger<DataAccessService> _logger;
     private readonly AppDataContext _context;
 
-    public DataAccessService(ILogger<DataAccessService> logger, AppDataContext context) 
+    public DataAccessService(ILogger<DataAccessService> logger, AppDataContext context)
     {
       _logger = logger;
       _context = context;
@@ -52,7 +52,7 @@ namespace WebApp.Common.Services
       try
       {
         T? item = await _context.Set<T>().FindAsync(id);
-        if(item != null)
+        if (item != null)
         {
           _context.Set<T>().Remove(item);
           await _context.SaveChangesAsync();
@@ -75,7 +75,7 @@ namespace WebApp.Common.Services
         T? item = await _context.Set<T>().FindAsync(id);
         return item;
       }
-      catch (Exception ex) 
+      catch (Exception ex)
       {
         _logger.LogCritical("GetObject", ex);
         return null;
