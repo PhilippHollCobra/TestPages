@@ -70,7 +70,8 @@ jobs:
     - name: Run tests
       run: | 
         $env:API_BASE_URL="http://localhost:9001"
-        dotnet test 'src/WebApp.ApiTests' /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
+        dotnet test /p:CollectCoverage=true /p:Threshold=0%2c0%2c0 /p:ThresholdType=line%2cbranch%2cmethod
+      working-directory: 'src/WebApp.ApiTests/.'
       
       
   publishArtifact:
