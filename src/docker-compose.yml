@@ -2,6 +2,15 @@ version: '3.4'
 
 services:
 
+  db:
+    container_name: db
+    image: mcr.microsoft.com/mssql/server:latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "sa_apitests2023?"
+      ACCEPT_EULA: "Y"
+
   webapp.api:
     image: testapi:webappapi
     build:
@@ -9,3 +18,7 @@ services:
       dockerfile: WebApp.Api/Dockerfile
     ports:
       - 9001:9001
+    environment:
+      ASPNETCORE_ENVIRONMENT: Apitests
+    depends_on:
+      - db
