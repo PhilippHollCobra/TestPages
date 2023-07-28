@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using WebApp.Common.Data;
 using WebApp.Common.Interfaces;
 using WebApp.Common.Services;
@@ -18,7 +19,13 @@ namespace WebApp.Api
 
       builder.Services.AddScoped<IDataAccessService, DataAccessService>();
 
-      builder.Services.AddControllers();
+      builder.Services.AddControllers().AddJsonOptions(options =>
+      {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        //options.JsonSerializerOptions.DefaultIgnoreCondition =
+        //       JsonIgnoreCondition.WhenWritingNull;
+      });
+      ;
       // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
