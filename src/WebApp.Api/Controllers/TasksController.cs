@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using WebApp.Common.Interfaces;
+using WebApp.Common.Models;
 
 namespace WebApp.Api.Controllers
 {
@@ -8,50 +8,60 @@ namespace WebApp.Api.Controllers
   [Route("[controller]")]
   public class TasksController : ControllerBase
   {
-    [HttpGet]
-    public IActionResult Get()
-    {
-      List<MyTask> list = new List<MyTask>
-      {
-        new MyTask
-        {
-          Id = 1,
-          Name = "Test",
-          Description = "Test"
-        },
-        new MyTask
-        {
-          Id = 2,
-          Name = "Test1",
-          Description = "Test1",
-          TaskType = TaskType.Demo
-        }
-      };
+    private readonly IDataAccessService _dataAccessService;
 
-      return Ok(list);
+    public TasksController(IDataAccessService dataAccessService)
+    {
+      _dataAccessService = dataAccessService;
+    }
+
+    [HttpGet]
+    [Route("all")]
+    public async Task<IActionResult> GetAllAsync()
+    {
+      List<MyTask>? tasks = await _dataAccessService.GetObjectsAsync<MyTask>();
+      return Ok(tasks);
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+      MyTask? task = await _dataAccessService.GetObjectAsync<MyTask>(id);
+      return Ok(task);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] List<MyTask> tasks)
+    [Route("{name}")]
+    public async Task<IActionResult> CreateTaskAsync(string name)
     {
-      return Ok(tasks);
+      MyTask? createdTask = await _dataAccessService.CreateObjectAsync(new MyTask
+      {
+        Name = name,
+      });
+
+      return Ok(createdTask);
+    }
+
+    [HttpPut]
+    [Route("{id}/{name}")]
+    public async Task<IActionResult> UpdateTaskAsync(Guid id, string name)
+    {
+      MyTask? updatedTask = await _dataAccessService.UpdateObjectAsync(new MyTask
+      {
+        Id = id,
+        Name = name
+      });
+
+      return Ok(updatedTask);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<IActionResult> DeleteTaskAsync(Guid id)
+    {
+      bool result = await _dataAccessService.DeleteObjectAsync<MyTask>(id);
+      return Ok(result);
     }
   }
-
-    public class MyTask
-    {
-      public int? Id { get; set; }
-      public string? Name { get; set; }
-      public string? Description { get; set; }
-
-    [JsonConverter(typeof(StringEnumConverter))]
-    public TaskType? TaskType { get; set; }
-    }
-
-    public enum TaskType
-    {
-      Default,
-      Demo,
-      Impostant
-    }
-  }
+}

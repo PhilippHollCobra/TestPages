@@ -12,7 +12,7 @@ using WebApp.Common.Data;
 namespace WebApp.Common.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20230721052849_Init")]
+    [Migration("20230731110405_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -27,12 +27,10 @@ namespace WebApp.Common.Migrations
 
             modelBuilder.Entity("WebApp.Common.Models.Address", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasColumnName("ID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)")
@@ -53,6 +51,38 @@ namespace WebApp.Common.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("WebApp.Common.Models.MyTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ID");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("CREATED_BY");
+
+                    b.Property<DateTime?>("DateCreate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DATE_CREATE");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DESCRIPTION");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NAME");
+
+                    b.Property<string>("TaskType")
+                        .HasColumnType("nvarchar(24)")
+                        .HasColumnName("TASK_TYPE");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MyTasks");
                 });
 #pragma warning restore 612, 618
         }

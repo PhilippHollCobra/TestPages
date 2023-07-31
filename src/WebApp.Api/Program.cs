@@ -59,7 +59,11 @@ namespace WebApp.Api
         IDataAccessService? dataAccessService = serviceProvider.GetRequiredService<IDataAccessService>();
         if (dataAccessService != null)
         {
-          dataAccessService.MigrateDatabaseAsync().GetAwaiter().GetResult();
+          bool success = dataAccessService.MigrateDatabaseAsync().GetAwaiter().GetResult();
+          if(success)
+          {
+            dataAccessService.CreateDefaultDataAsync().GetAwaiter().GetResult();
+          }
         }
       }
     }

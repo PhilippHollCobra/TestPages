@@ -25,7 +25,7 @@ namespace WebApp.Api.Controllers
 
     [HttpGet]
     [Route("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    public async Task<IActionResult> GetByIdAsync(Guid id)
     {
       Address? address = await _dataAccessService.GetObjectAsync<Address>(id);
       return Ok(address);
@@ -46,7 +46,7 @@ namespace WebApp.Api.Controllers
 
     [HttpPut]
     [Route("{id}/{firstName}/{lastName}")]
-    public async Task<IActionResult> UpdateAddressAsync(int id, string firstName, string lastName)
+    public async Task<IActionResult> UpdateAddressAsync(Guid id, string firstName, string lastName)
     {
       Address? updatedAddress = await _dataAccessService.UpdateObjectAsync(new Address
       {
@@ -60,7 +60,7 @@ namespace WebApp.Api.Controllers
 
     [HttpDelete]
     [Route("{id}")]
-    public async Task<IActionResult> DeleteAddressAsync(int id)
+    public async Task<IActionResult> DeleteAddressAsync(Guid id)
     {
       bool result = await _dataAccessService.DeleteObjectAsync<Address>(id);
       return Ok(result);

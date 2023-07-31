@@ -7,6 +7,7 @@ namespace WebApp.Common.Data
   public class AppDataContext : DbContext
   {
     public DbSet<Address> Addresses { get; set; }
+    public DbSet<MyTask> MyTasks { get; set; }
 
     public AppDataContext() { }
 

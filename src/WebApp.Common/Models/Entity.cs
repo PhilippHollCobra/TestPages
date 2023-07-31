@@ -7,7 +7,7 @@ namespace WebApp.Common.Models
   {
     [Column("ID"), Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Column("DATE_CREATE")]
     public DateTime? DateCreate { get; set; }
