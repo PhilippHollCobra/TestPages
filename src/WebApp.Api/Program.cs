@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using WebApp.Api.Logging;
 using WebApp.Common.Data;
 using WebApp.Common.Interfaces;
 using WebApp.Common.Services;
@@ -11,6 +13,14 @@ namespace WebApp.Api
     public static void Main(string[] args)
     {
       WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+      //Logging
+      builder.Host.ConfigureLogging(builder =>
+      {
+        builder.ClearProviders();
+        builder.AddDebug();
+        builder.AddCustomLoggerProvider();
+      });
 
       // Add services to the container.
 
@@ -39,6 +49,8 @@ namespace WebApp.Api
         app.UseSwagger();
         app.UseSwaggerUI();
       }
+
+      app.UseMiddleware<RequestIdMiddleware>();
 
       app.UseHttpsRedirection();
 
