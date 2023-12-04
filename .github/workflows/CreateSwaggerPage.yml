@@ -45,7 +45,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
-        # Upload entire repository
+        # Upload ApiDoku folder
         path: 'ApiDoku/Documents'
     
     - name: Deploy to GitHub Pages
