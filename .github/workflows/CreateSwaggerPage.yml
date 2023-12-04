@@ -39,7 +39,7 @@ jobs:
 
     - name: Copy swagger.json(s) to ApiDoku
       run: |
-        cp ./src/swagger.json ./ApiDoku/Documents
+        cp ./swagger.json ./ApiDoku/Documents
       
     - name: Setup Pages
       uses: actions/configure-pages@v2
