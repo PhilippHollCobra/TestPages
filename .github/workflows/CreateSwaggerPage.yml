@@ -3,12 +3,17 @@ name: publish swagger page
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   publishArtifact:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
+  
     name: Publish swagger page
     runs-on: ubuntu-latest
     steps:
