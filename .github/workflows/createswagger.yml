@@ -1,4 +1,4 @@
-name: deploy CICD
+name: Create Swagger
 
 on:
   workflow_dispatch:
