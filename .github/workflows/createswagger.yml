@@ -1,0 +1,74 @@
+name: deploy CICD
+
+on:
+  workflow_dispatch:
+
+jobs:     
+  publishArtifact:
+    name: Publish API
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Publish
+      run: dotnet publish 'src/WebApp.Api' -c Release --output ./Release
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: publishApi
+        path: ./Release
+        retention-days: 1
+  
+  
+  createApiDoku:
+    name: Create Api-Doku
+    runs-on: ubuntu-latest
+    needs: [publishArtifact]
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: LoadArtifact
+      uses: actions/download-artifact@v3
+      with:
+        name: publishApi
+        path: ./Release
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore 'src/.'
+    
+    - name: Generate swagger.json
+      run: | 
+        dotnet new tool-manifest
+        dotnet tool install --version 6.5.0 Swashbuckle.AspNetCore.Cli
+        dotnet swagger tofile --output swagger.json ./Release/WebApp.Api.dll v1
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: swaggerDoku
+        path: ./swagger.json
+        retention-days: 1
+        
+  
+  deployApiDoku:
+    name: Deploy Api-Doku
+    runs-on: ubuntu-latest
+    needs: [createApiDoku]
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: swaggerDoku
+        path: ./Swagger
+    
+    - name: Display files
+      run: ls -R
+      working-directory: ./Swagger
+    
+    - name: Display files
+      run: ls -R
+      working-directory: ./Release
