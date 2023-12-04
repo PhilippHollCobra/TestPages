@@ -24,14 +24,6 @@ namespace WebApp.Api.Controllers
     }
 
     [HttpGet]
-    [Route("all1")]
-    public async Task<IActionResult> GetAll1Async()
-    {
-      List<Address>? addresses = await _dataAccessService.GetObjectsAsync<Address>();
-      return Ok(addresses);
-    }
-
-    [HttpGet]
     [Route("{id}")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
