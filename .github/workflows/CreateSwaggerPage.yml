@@ -3,9 +3,13 @@ name: publish swagger page
 on:
   workflow_dispatch:
 
-jobs:     
+jobs:
   publishArtifact:
-    name: Publish API
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    name: Publish swagger page
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -32,3 +36,20 @@ jobs:
         name: swaggerDoku
         path: ./swagger.json
         retention-days: 1
+
+    - name: Copy swagger.json(s) to ApiDoku
+      run: |
+        cp ./src/swagger.json ./ApiDoku/Documents
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        # Upload entire repository
+        path: 'ApiDoku/Documents'
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
