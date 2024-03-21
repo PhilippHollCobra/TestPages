@@ -1,0 +1,54 @@
+name: publish swagger page
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  publishArtifact:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+  
+    name: Publish swagger page
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Install dependencies
+      run: dotnet restore 'src/.'
+    
+    - name: Publish
+      run: dotnet publish 'src/WebApp.Api' -c Release --output ./Release 
+    
+    - name: Generate swagger.json
+      run: | 
+        dotnet new tool-manifest
+        dotnet tool install --version 6.5.0 Swashbuckle.AspNetCore.Cli
+        dotnet swagger tofile --output swagger.json ./Release/WebApp.Api.dll v1
+
+    - name: Copy swagger.json(s) to ApiDoku
+      run: |
+        cp ./swagger.json ./ApiDoku/Documents
+      
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        # Upload ApiDoku folder
+        path: 'ApiDoku/Documents'
+    
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
